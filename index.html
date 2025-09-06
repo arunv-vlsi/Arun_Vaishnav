@@ -1,728 +1,445 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Preview - How It Looks to Viewers</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Your Name - Design Verification Engineer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;70t0;800&display=swap" rel="stylesheet">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* --- Custom Styles & Animations --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a192f; /* Navy Blue */
+            color: #ccd6f6; /* Light Slate */
         }
 
-```
-    :root {
-        --primary-color: #2563eb;
-        --secondary-color: #1e40af;
-        --accent-color: #3b82f6;
-        --text-primary: #1f2937;
-        --text-secondary: #6b7280;
-        --background-light: #f9fafb;
-        --background-white: #ffffff;
-        --border-color: #e5e7eb;
-        --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-    }
+        .section-highlight {
+            color: #64ffda; /* Aqua Green */
+        }
 
-    body {
-        font-family: 'Inter', sans-serif;
-        line-height: 1.6;
-        color: var(--text-primary);
-        background-color: var(--background-white);
-    }
+        /* Typing cursor effect */
+        .typewriter-text {
+            border-right: .15em solid #64ffda;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+        }
 
-    .preview-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 20px;
-    }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
 
-    .preview-header {
-        text-align: center;
-        margin-bottom: 40px;
-        padding: 40px 0;
-        background: var(--gradient-primary);
-        color: white;
-        border-radius: 16px;
-    }
-
-    .preview-header h1 {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 10px;
-    }
-
-    .preview-header p {
-        font-size: 1.2rem;
-        opacity: 0.9;
-    }
-
-    .section-preview {
-        margin-bottom: 40px;
-        background: white;
-        border-radius: 16px;
-        box-shadow: var(--shadow-md);
-        overflow: hidden;
-    }
-
-    .section-title {
-        background: var(--primary-color);
-        color: white;
-        padding: 20px 30px;
-        font-size: 1.3rem;
-        font-weight: 600;
-    }
-
-    .section-content {
-        padding: 30px;
-    }
-
-    /* Navigation Preview */
-    .nav-preview {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 30px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .nav-logo {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--primary-color);
-    }
-
-    .nav-menu {
-        display: flex;
-        list-style: none;
-        gap: 2rem;
-    }
-
-    .nav-link {
-        text-decoration: none;
-        color: var(--text-primary);
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: color 0.3s ease;
-    }
-
-    .nav-link:hover {
-        color: var(--primary-color);
-    }
-
-    /* Hero Section Preview */
-    .hero-preview {
-        background: var(--gradient-primary);
-        color: white;
-        padding: 60px 40px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: center;
-    }
-
-    .hero-text h1 {
-        font-size: 3rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-        background: linear-gradient(45deg, #fff, #e2e8f0);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .hero-text h2 {
-        font-size: 1.4rem;
-        margin-bottom: 1.5rem;
-        opacity: 0.9;
-    }
-
-    .hero-text p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-        opacity: 0.8;
-        line-height: 1.7;
-    }
-
-    .hero-buttons {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
-
-    .btn {
-        padding: 12px 24px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: transform 0.3s ease;
-    }
-
-    .btn-primary {
-        background: white;
-        color: var(--primary-color);
-        box-shadow: var(--shadow-lg);
-    }
-
-    .btn-secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn:hover {
-        transform: translateY(-2px);
-    }
-
-    .hero-image img {
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: var(--shadow-lg);
-        border: 4px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .hero-stats {
-        display: flex;
-        gap: 2rem;
-        margin-top: 2rem;
-    }
-
-    .stat {
-        text-align: center;
-    }
-
-    .stat-number {
-        font-size: 2rem;
-        font-weight: 800;
-        color: white;
-    }
-
-    .stat-label {
-        font-size: 0.9rem;
-        opacity: 0.8;
-    }
-
-    /* Skills Preview */
-    .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-    }
-
-    .skill-category h4 {
-        color: var(--primary-color);
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .skill-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .skill-tag {
-        background: var(--gradient-primary);
-        color: white;
-        padding: 6px 12px;
-        border-radius: 16px;
-        font-size: 0.85rem;
-        font-weight: 500;
-    }
-
-    /* Timeline Preview */
-    .timeline-item {
-        display: flex;
-        gap: 2rem;
-        margin-bottom: 2rem;
-        padding: 20px;
-        background: var(--background-light);
-        border-radius: 12px;
-        border-left: 4px solid var(--primary-color);
-    }
-
-    .timeline-date {
-        background: var(--primary-color);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        white-space: nowrap;
-        height: fit-content;
-    }
-
-    .timeline-content h3 {
-        color: var(--primary-color);
-        margin-bottom: 0.5rem;
-    }
-
-    .timeline-content h4 {
-        color: var(--text-secondary);
-        margin-bottom: 1rem;
-    }
-
-    /* Projects Preview */
-    .projects-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-    }
-
-    .project-card {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: var(--shadow-md);
-        border: 1px solid var(--border-color);
-        transition: transform 0.3s ease;
-    }
-
-    .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
-    }
-
-    .project-image {
-        width: 100%;
-        height: 180px;
-        background: var(--gradient-primary);
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 3rem;
-    }
-
-    .project-content {
-        padding: 1.5rem;
-    }
-
-    .project-content h3 {
-        margin-bottom: 1rem;
-        color: var(--text-primary);
-    }
-
-    .project-tech {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 1rem;
-    }
-
-    .tech-tag {
-        background: var(--background-light);
-        color: var(--text-primary);
-        padding: 4px 8px;
-        border-radius: 12px;
-        font-size: 0.8rem;
-    }
-
-    /* Contact Preview */
-    .contact-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-    }
-
-    .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem;
-        background: var(--background-light);
-        border-radius: 8px;
-        margin-bottom: 1rem;
-    }
-
-    .contact-icon {
-        color: var(--primary-color);
-        font-size: 1.2rem;
-        width: 40px;
-        height: 40px;
-        background: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .contact-form {
-        background: var(--background-light);
-        padding: 2rem;
-        border-radius: 12px;
-    }
-
-    .form-group {
-        margin-bottom: 1rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        font-family: inherit;
-    }
-
-    .btn-submit {
-        background: var(--primary-color);
-        color: white;
-        padding: 12px 24px;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .hero-preview {
-            grid-template-columns: 1fr;
-            text-align: center;
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #64ffda; }
         }
         
-        .contact-content {
-            grid-template-columns: 1fr;
+        /* Scroll-in animation */
+        .reveal {
+            position: relative;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
-        
-        .nav-menu {
-            display: none;
+
+        .reveal.active {
+            transform: translateY(0px);
+            opacity: 1;
         }
-    }
 
-    .feature-highlight {
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        color: white;
-        padding: 20px;
-        border-radius: 12px;
-        margin: 20px 0;
-    }
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a192f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8892b0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64ffda;
+        }
 
-    .feature-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-        margin-top: 1rem;
-    }
-
-    .feature-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-</style>
-```
-
+        .glass-effect {
+            background: rgba(23, 42, 69, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+    </style>
 </head>
-<body>
-    <div class="preview-container">
-        <div class="preview-header">
-            <h1><i class="fas fa-eye"></i> Portfolio Website Preview</h1>
-            <p>How your Design Verification Engineer portfolio will look to viewers</p>
-        </div>
+<body class="antialiased">
 
-```
-    <!-- Navigation Preview -->
-    <div class="section-preview">
-        <div class="section-title">
-            <i class="fas fa-bars"></i> Navigation Bar (Fixed at Top)
-        </div>
-        <div class="nav-preview">
-            <div class="nav-logo">
-                <i class="fas fa-microchip"></i> Portfolio
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 glass-effect" id="header">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold section-highlight">
+                <a href="#">DV.</a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#" class="nav-link"><i class="fas fa-user"></i> About</a></li>
-                <li><a href="#" class="nav-link"><i class="fas fa-briefcase"></i> Experience</a></li>
-                <li><a href="#" class="nav-link"><i class="fas fa-laptop-code"></i> Projects</a></li>
-                <li><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
-            </ul>
+            <div class="hidden md:flex items-center space-x-8 text-sm">
+                <a href="#about" class="hover:text-green-300 transition-colors duration-300">01. About</a>
+                <a href="#experience" class="hover:text-green-300 transition-colors duration-300">02. Experience</a>
+                <a href="#projects" class="hover:text-green-300 transition-colors duration-300">03. Projects</a>
+                <a href="#contact" class="hover:text-green-300 transition-colors duration-300">04. Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+         <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800">
+            <a href="#about" class="block py-2 px-4 text-sm hover:bg-slate-700">About</a>
+            <a href="#experience" class="block py-2 px-4 text-sm hover:bg-slate-700">Experience</a>
+            <a href="#projects" class="block py-2 px-4 text-sm hover:bg-slate-700">Projects</a>
+            <a href="#contact" class="block py-2 px-4 text-sm hover:bg-slate-700">Contact</a>
         </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 md:px-20 lg:px-40">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center">
+            <h1 class="text-lg section-highlight font-mono mb-4" id="hero-greeting">Hi, my name is</h1>
+            <h2 class="text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-200" id="Arun Vaishnav"></h2>
+            <h3 class="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-400 mt-2" id="Design Verification Engineer">
+                I verify <span id="hero-title" class="typewriter-text text-slate-300"></span>
+            </h3>
+            <p class="mt-6 max-w-xl text-slate-400" id="hero-summary"></p>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 reveal">
+            <h2 class="text-3xl font-bold mb-8 flex items-center">
+                <span class="section-highlight mr-4 font-mono text-2xl">01.</span>
+                About Me
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
+                <div class="md:col-span-3 space-y-4 text-slate-400" id="about-description">
+                    <!-- About text will be inserted here -->
+                </div>
+                <div class="md:col-span-2 flex justify-center items-start">
+                    <div class="w-64 h-64 relative group">
+                        <div class="absolute inset-0 bg-green-300 rounded-lg transform transition duration-500 group-hover:rotate-6"></div>
+                        <img id="about-image" src="" alt="Profile Picture" class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-xl z-10">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-24 reveal">
+            <h2 class="text-3xl font-bold mb-8 flex items-center">
+                <span class="section-highlight mr-4 font-mono text-2xl">02.</span>
+                Where I've Worked
+            </h2>
+            <div id="experience-container" class="space-y-12">
+                <!-- Experience items will be injected here -->
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 reveal">
+            <h2 class="text-3xl font-bold mb-8 flex items-center">
+                <span class="section-highlight mr-4 font-mono text-2xl">03.</span>
+                Things I’ve Built
+            </h2>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 <!-- Project items will be injected here -->
+            </div>
+        </section>
+
+         <!-- Skills Section -->
+        <section id="skills" class="py-24 text-center reveal">
+            <h2 class="text-3xl font-bold mb-8 flex items-center justify-center">
+                <span class="section-highlight mr-4 font-mono text-2xl"></span>
+                My Toolkit
+            </h2>
+            <div id="skills-container" class="flex flex-wrap justify-center gap-4">
+                <!-- Skills will be injected here -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 text-center reveal">
+             <h2 class="text-3xl font-bold mb-8 flex items-center justify-center">
+                <span class="section-highlight mr-4 font-mono text-2xl">04.</span>
+                What's Next?
+            </h2>
+            <h3 class="text-4xl font-bold text-slate-200 mb-4">Get In Touch</h3>
+            <p class="max-w-xl mx-auto text-slate-400 mb-8">
+                I'm currently open to new opportunities and my inbox is always open. Whether you have a question or just want to say hi, I’ll try my best to get back to you!
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Hire Me Button -->
+    <div id="hire-me-button-container" class="fixed bottom-6 right-6 z-50">
+       <!-- Hire me button is dynamically generated -->
     </div>
 
-    <!-- Hero Section Preview -->
-    <div class="section-preview">
-        <div class="section-title">
-            <i class="fas fa-star"></i> Hero Section (First Impression)
-        </div>
-        <div class="hero-preview">
-            <div class="hero-text">
-                <div style="color: #e2e8f0; font-size: 1.1rem; margin-bottom: 1rem;">Hello, I'm</div>
-                <h1>John Doe</h1>
-                <h2>Design Verification Engineer</h2>
-                <p>Passionate about ensuring hardware designs meet specifications through comprehensive verification methodologies and cutting-edge simulation techniques.</p>
-                <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary">
-                        <i class="fas fa-envelope"></i> Get In Touch
-                    </a>
-                    <a href="#" class="btn btn-secondary">
-                        <i class="fas fa-eye"></i> View Projects
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">Projects</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Success Rate</div>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://via.placeholder.com/300x300/2563eb/ffffff?text=Your+Photo" alt="Profile Photo">
-            </div>
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-slate-500">
+        <p>Designed & Built by Your Name</p>
+    </footer>
 
-    <!-- Features Highlight -->
-    <div class="feature-highlight">
-        <h3><i class="fas fa-magic"></i> Interactive Features for Viewers</h3>
-        <div class="feature-list">
-            <div class="feature-item">
-                <i class="fas fa-mouse-pointer"></i>
-                <span>Smooth hover animations</span>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-mobile-alt"></i>
-                <span>Mobile-responsive design</span>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-play-circle"></i>
-                <span>YouTube video modals</span>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-filter"></i>
-                <span>Project filtering</span>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-arrow-up"></i>
-                <span>Smooth scrolling navigation</span>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-envelope"></i>
-                <span>Working contact form</span>
-            </div>
-        </div>
-    </div>
+    <script>
+        // --- CONFIGURATION ---
+        // Edit the values in this object to update your site content.
+        const portfolioData = {
+            name: "Your Name",
+            title: "complex SoCs.", // This will be typed out
+            email: "your.email@gmail.com", // Your actual email
+            
+            hero: {
+                greeting: "Hi, my name is",
+                summary: "I'm a Design Verification Engineer specializing in building robust verification environments and ensuring first-pass silicon success. Currently, I'm focused on creating scalable UVM testbenches for next-generation processors."
+            },
 
-    <!-- Skills Section Preview -->
-    <div class="section-preview">
-        <div class="section-title">
-            <i class="fas fa-cogs"></i> Technical Skills Section
-        </div>
-        <div class="section-content">
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h4><i class="fas fa-code"></i> Languages & Frameworks</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">SystemVerilog</span>
-                        <span class="skill-tag">UVM</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">C++</span>
-                        <span class="skill-tag">Perl</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4><i class="fas fa-microchip"></i> Hardware & FPGA</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">FPGA Design</span>
-                        <span class="skill-tag">ASIC Verification</span>
-                        <span class="skill-tag">RTL Design</span>
-                        <span class="skill-tag">DSP</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4><i class="fas fa-tools"></i> Tools & Platforms</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">VCS</span>
-                        <span class="skill-tag">ModelSim</span>
-                        <span class="skill-tag">Vivado</span>
-                        <span class="skill-tag">Cadence</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4><i class="fas fa-chart-line"></i> Methodologies</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Formal Verification</span>
-                        <span class="skill-tag">Coverage Analysis</span>
-                        <span class="skill-tag">Assertion-Based</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            about: {
+                // Find a good, professional-looking photo of yourself and host it on a site like Imgur or a GitHub repository.
+                // Then, paste the direct image link here.
+                // Placeholder image from placehold.co
+                image: "https://placehold.co/400x400/0a192f/64ffda?text=You",
+                description: [
+                    "Hello! I'm a passionate Design Verification Engineer with a knack for hunting down sneaky bugs in complex digital designs. My journey into the world of semiconductors began with a fascination for how tiny transistors could power the world's most advanced technologies.",
+                    "With a solid foundation in SystemVerilog and the Universal Verification Methodology (UVM), I've had the privilege of contributing to the verification of various IPs, from high-speed interfaces to intricate processor cores.",
+                    "I thrive on the challenge of developing comprehensive verification plans, architecting reusable testbenches, and achieving high coverage metrics to ensure a design is functionally correct and robust."
+                ]
+            },
 
-    <!-- Experience Timeline Preview -->
-    <div class="section-preview">
-        <div class="section-title">
-            <i class="fas fa-briefcase"></i> Professional Experience Timeline
-        </div>
-        <div class="section-content">
-            <div class="timeline-item">
-                <div class="timeline-date">2022 - Present</div>
-                <div class="timeline-content">
-                    <h3>Senior Design Verification Engineer</h3>
-                    <h4>Tech Corporation</h4>
-                    <p>Leading verification efforts for next-generation processors using SystemVerilog and UVM methodologies. Developed comprehensive testbenches and implemented advanced coverage analysis.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2020 - 2022</div>
-                <div class="timeline-content">
-                    <h3>Design Verification Engineer</h3>
-                    <h4>Silicon Valley Inc</h4>
-                    <p>Specialized in FPGA-based designs and implemented verification strategies for complex digital signal processing units.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+            experience: [
+                {
+                    company: "Innovate Semiconductors",
+                    role: "Senior Design Verification Engineer",
+                    duration: "Jan 2022 - Present",
+                    duties: [
+                        "Led the verification of a high-performance RISC-V processor core, achieving 100% functional and code coverage.",
+                        "Developed a configurable UVM-based testbench from scratch, which reduced regression runtime by 40%.",
+                        "Mentored junior engineers on best practices in UVM and advanced verification techniques.",
+                        "Collaborated with design and architecture teams to resolve over 500 critical bugs before tape-out."
+                    ]
+                },
+                {
+                    company: "LogicWorks Inc.",
+                    role: "Design Verification Engineer",
+                    duration: "Jul 2019 - Dec 2021",
+                    duties: [
+                        "Owned the block-level verification for a PCIe Gen5 controller IP.",
+                        "Wrote SystemVerilog Assertions (SVA) to catch complex corner-case bugs in the protocol layer.",
+                        "Developed Python scripts to automate test generation and results parsing, improving team efficiency by 25%.",
+                    ]
+                }
+            ],
 
-    <!-- Projects Preview -->
-    <div class="section-preview">
-        <div class="section-title">
-            <i class="fas fa-laptop-code"></i> Featured Projects Gallery
-        </div>
-        <div class="section-content">
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-microchip"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>Advanced CPU Verification Suite</h3>
-                        <p>Comprehensive verification environment for a 64-bit processor using SystemVerilog and UVM.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">SystemVerilog</span>
-                            <span class="tech-tag">UVM</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">VCS</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-wave-square"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3>FPGA Signal Processor</h3>
-                        <p>Design and verification of a digital signal processing unit on FPGA platform with real-time constraints.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Verilog</span>
-                            <span class="tech-tag">FPGA</span>
-                            <span class="tech-tag">Vivado</span>
-                            <span class="tech-tag">MATLAB</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            projects: [
+                 {
+                    title: "UVM Testbench for an AXI Bus Fabric",
+                    description: "A complete UVM environment to verify a multi-master, multi-slave AXI interconnect, featuring constrained-random stimulus and comprehensive coverage collection.",
+                    tech: ["SystemVerilog", "UVM", "Python", "VCS"],
+                    link: "#", // Add a link to your GitHub repo if available
+                    video: null // No video for this one
+                },
+                {
+                    title: "APB Protocol Checker in SVA",
+                    description: "Developed a formal property set using SystemVerilog Assertions to exhaustively verify compliance with the AMBA APB protocol.",
+                    tech: ["SVA", "Formal Verification", "JasperGold"],
+                    link: "#",
+                    video: null
+                },
+                {
+                    title: "Project Showcase: Verification Flow",
+                    description: "This video explains the end-to-end verification flow I developed for a recent project, from planning to sign-off.",
+                    tech: ["UVM", "Regression", "Coverage Analysis"],
+                    link: "#",
+                    // IMPORTANT: Go to your YouTube video, click "Share", then "Embed", and copy ONLY the video ID from the URL.
+                    // For example, if the URL is https://www.youtube.com/embed/dQw4w9WgXcQ, the ID is "dQw4w9WgXcQ".
+                    video: "dQw4w9WgXcQ" // Example video ID
+                },
+            ],
 
-    <!-- Contact Section Preview -->
-    <div class="section-preview">
-        <div class="section-title">
-            <i class="fas fa-envelope"></i> Contact Section
-        </div>
-        <div class="section-content">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <span>john.doe@email.com</span>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h4>Phone</h4>
-                            <span>+1 (555) 123-4567</span>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4>Location</h4>
-                            <span>San Francisco, CA</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <h3>Send a Message</h3>
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" style="margin-bottom: 10px;">
-                        <input type="email" placeholder="Your Email">
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Your Message" rows="4"></textarea>
-                    </div>
-                    <button class="btn-submit">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+            skills: [
+                "SystemVerilog", "UVM", "Verilog", "VHDL", "Python", "Perl", "TCL",
+                "C/C++", "SystemVerilog Assertions (SVA)", "Formal Verification",
+                "Gate Level Simulation (GLS)", "QuestaSim/Modelsim", "Synopsys VCS",
+                "Cadence Xcelium", "ARM AMBA (AXI, AHB, APB)", "PCIe", "Ethernet"
+            ]
+        };
 
-    <!-- Viewer Experience Summary -->
-    <div class="feature-highlight">
-        <h3><i class="fas fa-users"></i> What Viewers Will Experience</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
-            <div>
-                <h4><i class="fas fa-rocket"></i> Professional First Impression</h4>
-                <p>Clean, modern design with smooth animations that immediately conveys professionalism and technical expertise.</p>
-            </div>
-            <div>
-                <h4><i class="fas fa-mobile-alt"></i> Perfect on All Devices</h4>
-                <p>Fully responsive design that looks great on desktop, tablet, and mobile devices with touch-friendly interactions.</p>
-            </div>
-            <div>
-                <h4><i class="fas fa-eye"></i> Easy Navigation</h4>
-                <p>Intuitive navigation with smooth scrolling, clear sections, and interactive elements that guide users through your story.</p>
-            </div>
-            <div>
-                <h4><i class="fas fa-play"></i> Engaging Content</h4>
-                <p>Interactive project gallery with video demos, filterable content, and comprehensive skill showcase.</p>
-            </div>
-        </div>
-    </div>
-</div>
-```
+
+        // --- APPLICATION LOGIC ---
+        // You don't need to edit anything below this line.
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateContent();
+            setupEventListeners();
+            animateOnScroll();
+            feather.replace(); // Initialize Feather Icons
+        });
+        
+        function populateContent() {
+            // Hero
+            document.getElementById('hero-greeting').textContent = portfolioData.hero.greeting;
+            document.getElementById('hero-name').textContent = portfolioData.name;
+            document.getElementById('hero-title').textContent = portfolioData.title;
+            document.getElementById('hero-summary').textContent = portfolioData.hero.summary;
+
+            // About
+            const aboutDescContainer = document.getElementById('about-description');
+            portfolioData.about.description.forEach(p => {
+                const para = document.createElement('p');
+                para.textContent = p;
+                aboutDescContainer.appendChild(para);
+            });
+            document.getElementById('about-image').src = portfolioData.about.image;
+
+            // Experience
+            const expContainer = document.getElementById('experience-container');
+            portfolioData.experience.forEach(job => {
+                const jobEl = document.createElement('div');
+                jobEl.className = 'flex flex-col md:flex-row gap-6 p-6 rounded-lg transition duration-300 hover:bg-slate-800/50 glass-effect';
+                jobEl.innerHTML = `
+                    <div class="md:w-1/3 text-sm text-slate-400">
+                        <p class="font-semibold text-slate-200">${job.role}</p>
+                        <p class="section-highlight">${job.company}</p>
+                        <p class="mt-1">${job.duration}</p>
+                    </div>
+                    <div class="md:w-2/3">
+                        <ul class="list-none space-y-2">
+                            ${job.duties.map(duty => `
+                                <li class="flex items-start">
+                                    <span class="text-green-300 mr-3 mt-1">&#10148;</span>
+                                    <span>${duty}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+                expContainer.appendChild(jobEl);
+            });
+
+            // Projects
+            const projContainer = document.getElementById('projects-container');
+            portfolioData.projects.forEach(proj => {
+                const projEl = document.createElement('div');
+                projEl.className = 'flex flex-col justify-between rounded-lg p-6 transition duration-300 hover:-translate-y-2 glass-effect';
+                
+                let projectContent = `
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <i data-feather="folder" class="w-10 h-10 text-green-300"></i>
+                             ${proj.link !== '#' ? `<a href="${proj.link}" target="_blank" rel="noopener noreferrer"><i data-feather="external-link" class="w-6 h-6 hover:text-green-300"></i></a>` : ''}
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-200 mb-2">${proj.title}</h3>
+                        <p class="text-slate-400 text-sm mb-4">${proj.description}</p>
+                    </div>
+                    <div>
+                        <ul class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400 font-mono">
+                           ${proj.tech.map(t => `<li>${t}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                
+                if (proj.video) {
+                    projectContent = `
+                        <div class="aspect-w-16 aspect-h-9 mb-4 rounded-md overflow-hidden">
+                            <iframe src="https://www.youtube.com/embed/${proj.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-200 mb-2">${proj.title}</h3>
+                        <p class="text-slate-400 text-sm mb-4">${proj.description}</p>
+                        <ul class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400 font-mono">
+                           ${proj.tech.map(t => `<li>${t}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+
+                projEl.innerHTML = projectContent;
+                projContainer.appendChild(projEl);
+            });
+
+             // Skills
+            const skillsContainer = document.getElementById('skills-container');
+            portfolioData.skills.forEach(skill => {
+                const skillEl = document.createElement('span');
+                skillEl.className = 'bg-slate-700 text-slate-300 text-sm font-medium px-4 py-2 rounded-full shadow-md';
+                skillEl.textContent = skill;
+                skillsContainer.appendChild(skillEl);
+            });
+
+            // Hire Me Button
+            const hireMeContainer = document.getElementById('hire-me-button-container');
+            const mailtoSubject = encodeURIComponent("Let's Connect - Opportunity");
+            const mailtoBody = encodeURIComponent(`Hi ${portfolioData.name},\n\nI came across your portfolio and was very impressed. I'd like to discuss a potential opportunity.\n\nBest regards,`);
+            const mailtoLink = `mailto:${portfolioData.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+            
+            const hireMeButton = document.createElement('a');
+            hireMeButton.href = mailtoLink;
+            hireMeButton.className = 'block bg-green-400 text-gray-900 font-bold py-3 px-6 rounded-full shadow-lg hover:bg-green-300 transition-all duration-300 transform hover:scale-110';
+            hireMeButton.innerHTML = 'Hire Me!';
+            hireMeContainer.appendChild(hireMeButton);
+        }
+
+        function setupEventListeners() {
+            // Header shadow on scroll
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('header');
+                if (window.scrollY > 10) {
+                    header.classList.add('shadow-lg');
+                } else {
+                    header.classList.remove('shadow-lg');
+                }
+            });
+
+             // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu on link click
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                     mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+        
+        function animateOnScroll() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const elementsToReveal = document.querySelectorAll('.reveal');
+            elementsToReveal.forEach((el) => {
+                observer.observe(el);
+            });
+        }
+    </script>
 
 </body>
 </html>
+
