@@ -18,7 +18,7 @@
 
     <!-- Theme switcher script to prevent FOUC (Flash of Unstyled Content) -->
     <script>
-        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        // Placed in head to avoid flash of unstyled content.
         if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.classList.add('dark')
         } else {
@@ -28,12 +28,7 @@
 
     <style>
         /* --- Custom Styles & Animations --- */
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-            overflow-x: hidden;
-        }
-
+        
         /* Light Mode Variables */
         :root {
             --bg-color: #f8fafc; /* slate-50 */
@@ -42,8 +37,6 @@
             --highlight-color: #0d9488; /* teal-600 */
             --card-bg-color: rgba(255, 255, 255, 0.6);
             --card-border-color: rgba(13, 148, 136, 0.1);
-            --bg-grid-color: #e2e8f0; /* slate-200 */
-            --bg-dot-color: #0d9488; /* teal-600 */
         }
 
         /* Dark Mode Variables */
@@ -54,30 +47,39 @@
             --highlight-color: #64ffda;
             --card-bg-color: rgba(23, 42, 69, 0.6);
             --card-border-color: rgba(100, 255, 218, 0.1);
-            --bg-grid-color: #1a2e4a;
-            --bg-dot-color: #64ffda;
         }
         
         body {
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            overflow-x: hidden;
         }
 
-        /* Animated circuit background */
+        /* --- Animated background --- */
         body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><g fill="${encodeURIComponent(getComputedStyle(document.documentElement).getPropertyValue('--bg-grid-color'))}"><rect width="1" height="100" x="20"/><rect width="1" height="100" x="40"/><rect width="1" height="100" x="60"/><rect width="1" height="100" x="80"/><rect width="100" height="1" y="20"/><rect width="100" height="1" y="40"/><rect width="100" height="1" y="60"/><rect width="100" height="1" y="80"/></g><g fill="${encodeURIComponent(getComputedStyle(document.documentElement).getPropertyValue('--bg-dot-color'))}"><circle cx="20" cy="20" r="1.5"/><circle cx="40" cy="40" r="1.5"/><circle cx="60" cy="60" r="1.5"/><circle cx="80" cy="80" r="1.5"/><circle cx="20" cy="60" r="1.5"/><circle cx="60" cy="20" r="1.5"/></g></svg>');
+            content: ''; position: fixed; top: 0; left: 0; width: 200%; height: 200%;
             background-size: 100px 100px;
-            opacity: 0.1;
-            z-index: -1;
+            opacity: 0.1; z-index: -1;
             animation: bg-scroll 45s linear infinite;
+            transition: background-image 0.3s ease-in-out;
         }
+
+        /* Light mode background texture */
+        body::before {
+             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><g fill="%23e2e8f0"><rect width="1" height="100" x="20"/><rect width="1" height="100" x="40"/><rect width="1" height="100" x="60"/><rect width="1" height="100" x="80"/><rect width="100" height="1" y="20"/><rect width="100" height="1" y="40"/><rect width="100" height="1" y="60"/><rect width="100" height="1" y="80"/></g><g fill="%230d9488"><circle cx="20" cy="20" r="1.5"/><circle cx="40" cy="40" r="1.5"/><circle cx="60" cy="60" r="1.5"/><circle cx="80" cy="80" r="1.5"/><circle cx="20" cy="60" r="1.5"/><circle cx="60" cy="20" r="1.5"/></g></svg>');
+        }
+        
+        /* Dark mode background texture */
+        .dark body::before {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><g fill="%231a2e4a"><rect width="1" height="100" x="20"/><rect width="1" height="100" x="40"/><rect width="1" height="100" x="60"/><rect width="1" height="100" x="80"/><rect width="100" height="1" y="20"/><rect width="100" height="1" y="40"/><rect width="100" height="1" y="60"/><rect width="100" height="1" y="80"/></g><g fill="%2364ffda"><circle cx="20" cy="20" r="1.5"/><circle cx="40" cy="40" r="1.5"/><circle cx="60" cy="60" r="1.5"/><circle cx="80" cy="80" r="1.5"/><circle cx="20" cy="60" r="1.5"/><circle cx="60" cy="20" r="1.5"/></g></svg>');
+        }
+
 
         @keyframes bg-scroll {
-            0% { background-position: 0 0; }
-            100% { background-position: -200px -200px; }
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100px, -100px); }
         }
 
         .section-highlight { color: var(--highlight-color); }
@@ -106,20 +108,21 @@
         #extra-curricular-toggle.expanded svg { transform: rotate(180deg); }
     </style>
 </head>
-<body class="antialiased bg-slate-50 text-slate-900 dark:bg-[#0a192f] dark:text-slate-200">
+<body class="antialiased">
 
     <!-- Header / Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 glass-effect" id="header">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold section-highlight"><a href="#">DV.</a></div>
+            <div class="text-2xl font-bold section-highlight"><a href="#">Profile</a></div>
             <div class="hidden md:flex items-center space-x-6 text-sm">
                 <div id="nav-links" class="flex items-center space-x-6"></div>
-                <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                    <i id="theme-icon" class="text-slate-800 dark:text-slate-200"></i>
+                <!-- FIX: Added text color variable to button for icon to inherit -->
+                <button id="theme-toggle" class="p-2 rounded-full text-[var(--text-color)] hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    <i id="theme-icon"></i>
                 </button>
             </div>
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-slate-800 dark:text-white focus:outline-none"><i data-feather="menu"></i></button>
+                <button id="mobile-menu-button" class="text-[var(--text-color)] focus:outline-none"><i data-feather="menu"></i></button>
             </div>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-800"></div>
@@ -132,15 +135,15 @@
         <section id="hero" class="min-h-screen flex flex-col justify-center">
             <h1 class="text-lg section-highlight font-mono mb-4" id="hero-greeting"></h1>
             <h2 class="text-4xl sm:text-6xl lg:text-7xl font-bold" id="hero-name"></h2>
-            <h3 class="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-600 dark:text-slate-400 mt-2">I verify <span id="hero-title" class="typewriter-text text-slate-800 dark:text-slate-300"></span></h3>
-            <p class="mt-6 max-w-xl text-slate-600 dark:text-slate-400" id="hero-summary"></p>
+            <h3 class="text-3xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-muted-color)] mt-2">I verify <span id="hero-title" class="typewriter-text text-[var(--text-color)]"></span></h3>
+            <p class="mt-6 max-w-xl text-[var(--text-muted-color)]" id="hero-summary"></p>
         </section>
 
         <!-- About Section -->
         <section id="about" class="py-24 reveal">
             <h2 class="section-title"><span class="section-highlight mr-4 font-mono text-2xl">01.</span>About Me</h2>
             <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
-                <div class="md:col-span-3 space-y-4 text-slate-600 dark:text-slate-400" id="about-description"></div>
+                <div class="md:col-span-3 space-y-4 text-[var(--text-muted-color)]" id="about-description"></div>
                 <div class="md:col-span-2 flex justify-center items-start">
                     <div class="w-64 h-64 relative group">
                         <div class="absolute inset-0 bg-teal-400 dark:bg-green-300 rounded-lg transform transition duration-500 group-hover:rotate-6"></div>
@@ -180,7 +183,7 @@
         <!-- Passion Projects Section -->
         <section id="passion-projects" class="py-24 reveal">
             <h2 class="section-title"><span class="section-highlight mr-4 font-mono text-2xl">05.</span>Things I Build</h2>
-            <p class="max-w-3xl text-slate-600 dark:text-slate-400 mb-12">Beyond my professional work, I'm passionate about building things. These projects allow me to experiment with new technologies and bring ideas to life.</p>
+            <p class="max-w-3xl text-[var(--text-muted-color)] mb-12">Beyond my professional work, I'm passionate about building things. These projects allow me to experiment with new technologies and bring ideas to life.</p>
             <div id="passion-projects-container" class="space-y-16"></div>
         </section>
 
@@ -199,7 +202,7 @@
                     <i data-feather="chevron-down" class="section-highlight"></i>
                 </button>
                 <div id="extra-curricular-content" class="overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
-                    <div class="p-6 pt-0 text-slate-600 dark:text-slate-400">
+                    <div class="p-6 pt-0 text-[var(--text-muted-color)]">
                         <p id="extra-curricular-summary" class="mb-4"></p>
                         <ul id="extra-curricular-details" class="list-none space-y-2 mb-4"></ul>
                         <div id="extra-curricular-channels" class="flex space-x-4"></div>
@@ -212,7 +215,10 @@
         <section id="contact" class="py-24 text-center reveal">
             <h2 class="section-title justify-center"><span class="section-highlight mr-4 font-mono text-2xl">08.</span>What's Next?</h2>
             <h3 class="text-4xl font-bold mb-4">Get In Touch</h3>
-            <p class="max-w-xl mx-auto text-slate-600 dark:text-slate-400 mb-8">I'm currently open to new opportunities. Whether you have a question or just want to say hi, I’ll get back to you!</p>
+            <p class="max-w-xl mx-auto text-[var(--text-muted-color)] mb-8">I'm currently open to new opportunities. Whether you have a question or just want to say hi, I’ll get back to you!</p>
+            <div id="contact-links" class="flex justify-center items-center gap-6">
+                <!-- Contact links will be injected here -->
+            </div>
         </section>
 
     </main>
@@ -221,7 +227,7 @@
     <div id="hire-me-button-container" class="fixed bottom-6 right-6 z-50"></div>
 
     <!-- Footer -->
-    <footer class="text-center py-6 text-xs text-slate-500 dark:text-slate-500">
+    <footer class="text-center py-6 text-xs text-slate-500">
         <p>Designed & Built by Your Name</p>
     </footer>
 
@@ -231,16 +237,15 @@
             name: "Arun Vaishnav",
             title: "complex SoCs.",
             email: "arunvaishnav7vlsi@gmail.com",
+            linkedin: "www.linkedin.com/in/arun-vaishnav-vlsi", // Add your LinkedIn profile URL
             navLinks: [
-                { name: "About", href: "#about" },
-                { name: "Experience", href: "#experience" },
-                { name: "Education", href: "#education" },
-                { name: "Projects", href: "#passion-projects" },
+                { name: "About", href: "#about" }, { name: "Experience", href: "#experience" },
+                { name: "Education", href: "#education" }, { name: "Projects", href: "#passion-projects" },
                 { name: "Contact", href: "#contact" },
             ],
             hero: { greeting: "Hi, my name is", summary: "I'm a Design Verification Engineer specializing in building robust verification environments and ensuring first-pass silicon success. Currently, I'm focused on creating scalable UVM testbenches for next-generation processors." },
             about: { image: "https://placehold.co/400x400/0a192f/64ffda?text=You", description: ["Hello! I'm a passionate Design Verification Engineer with a knack for hunting down sneaky bugs in complex digital designs. My journey into the world of semiconductors began with a fascination for how tiny transistors could power the world's most advanced technologies.", "With a solid foundation in SystemVerilog and UVM, I've had the privilege of contributing to the verification of various IPs, from high-speed interfaces to intricate processor cores.", "I thrive on developing comprehensive verification plans, architecting reusable testbenches, and achieving high coverage metrics to ensure a design is functionally correct and robust."] },
-            experience: [{ company: "Innovate Semiconductors", role: "Senior DV Engineer", duration: "Jan 2022 - Present", duties: ["Led verification of a RISC-V processor core, achieving 100% functional coverage.", "Developed a configurable UVM testbench, reducing regression runtime by 40%."] }, { company: "LogicWorks Inc.", role: "DV Engineer", duration: "Jul 2019 - Dec 2021", duties: ["Owned block-level verification for a PCIe Gen5 controller.", "Wrote SVA to catch complex corner-case bugs."] }],
+            experience: [{ company: "Wipro", role: "Design Verification Engineer", duration: "July 2024 - Present", duties: ["Led verification of a RISC-V processor core, achieving 100% functional coverage.", "Developed a configurable UVM testbench, reducing regression runtime by 40%."] }, { company: "Tata Consultancy Services", role: "Systems Engineer", duration: "Feb 2022 - July 2024", duties: ["Owned block-level verification for a PCIe Gen5 controller.", "Wrote SVA to catch complex corner-case bugs."] }],
             education: [{ school: "University of Technology", degree: "M.S. in Electrical & Computer Engineering", duration: "2017 - 2019", details: "Focused on VLSI Design and Computer Architecture. Thesis on low-power verification techniques." }, { school: "Institute of Engineering", degree: "B.S. in Electronics & Communication", duration: "2013 - 2017", details: "Graduated with honors. President of the Robotics Club." }],
             certifications: [{ name: "UVM Basic Training", issuer: "Doulos", link: "#" }, { name: "SystemVerilog for Verification", issuer: "Cadence", link: "#" }],
             achievements: ["Awarded 'Bug Hunter of the Quarter' twice at Innovate Semiconductors.", "Published a paper on 'Automated Test Generation' at a national VLSI conference.", "Received a full scholarship for my Master's program."],
@@ -259,7 +264,6 @@
         });
 
         function populateContent() {
-            // Hero
             document.getElementById('hero-greeting').textContent = portfolioData.hero.greeting;
             document.getElementById('hero-name').textContent = portfolioData.name;
             document.getElementById('hero-title').textContent = portfolioData.title;
@@ -271,47 +275,49 @@
                 container.innerHTML = items.map(renderFn).join('');
             };
 
-            // Nav Links
             const navLinksContainer = document.getElementById('nav-links');
             const mobileMenuContainer = document.getElementById('mobile-menu');
-            let navHTML = portfolioData.navLinks.map((link, i) => `<a href="${link.href}" class="text-slate-800 dark:text-slate-200 hover:section-highlight transition-colors duration-300">0${i+1}. ${link.name}</a>`).join('');
+            // FIX: Using CSS variable for nav link text color to ensure it respects the theme.
+            let navHTML = portfolioData.navLinks.map((link, i) => `<a href="${link.href}" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] transition-colors duration-300">0${i+1}. ${link.name}</a>`).join('');
             navLinksContainer.innerHTML = navHTML;
             mobileMenuContainer.innerHTML = portfolioData.navLinks.map(link => `<a href="${link.href}" class="block py-2 px-4 text-sm hover:bg-slate-200 dark:hover:bg-slate-700">${link.name}</a>`).join('');
 
-            // About
             populateList('about-description', portfolioData.about.description, p => `<p>${p}</p>`);
             document.getElementById('about-image').src = portfolioData.about.image;
 
-            // Experience
-            populateList('experience-container', portfolioData.experience, job => `<div class="flex flex-col md:flex-row gap-6 p-6 rounded-lg transition duration-300 hover:bg-black/5 dark:hover:bg-slate-800/50 glass-effect"><div class="md:w-1/3 text-sm text-slate-600 dark:text-slate-400"><p class="font-semibold text-slate-800 dark:text-slate-200">${job.role}</p><p class="section-highlight">${job.company}</p><p class="mt-1">${job.duration}</p></div><div class="md:w-2/3"><ul class="list-none space-y-2">${job.duties.map(duty => `<li class="flex items-start"><span class="section-highlight mr-3 mt-1">&#10148;</span><span class="text-slate-600 dark:text-slate-400">${duty}</span></li>`).join('')}</ul></div></div>`);
+            populateList('experience-container', portfolioData.experience, job => `<div class="flex flex-col md:flex-row gap-6 p-6 rounded-lg transition duration-300 hover:bg-black/5 dark:hover:bg-slate-800/50 glass-effect"><div class="md:w-1/3 text-sm text-[var(--text-muted-color)]"><p class="font-semibold text-[var(--text-color)]">${job.role}</p><p class="section-highlight">${job.company}</p><p class="mt-1">${job.duration}</p></div><div class="md:w-2/3"><ul class="list-none space-y-2">${job.duties.map(duty => `<li class="flex items-start"><span class="section-highlight mr-3 mt-1">&#10148;</span><span class="text-[var(--text-muted-color)]">${duty}</span></li>`).join('')}</ul></div></div>`);
 
-            // Education
-            populateList('education-container', portfolioData.education, edu => `<div class="p-6 rounded-lg glass-effect"><div class="flex justify-between items-baseline"><h3 class="font-bold">${edu.degree}</h3><p class="text-sm font-mono text-slate-600 dark:text-slate-400">${edu.duration}</p></div><p class="section-highlight">${edu.school}</p><p class="mt-2 text-sm text-slate-600 dark:text-slate-400">${edu.details}</p></div>`);
+            populateList('education-container', portfolioData.education, edu => `<div class="p-6 rounded-lg glass-effect"><div class="flex justify-between items-baseline"><h3 class="font-bold">${edu.degree}</h3><p class="text-sm font-mono text-[var(--text-muted-color)]">${edu.duration}</p></div><p class="section-highlight">${edu.school}</p><p class="mt-2 text-sm text-[var(--text-muted-color)]">${edu.details}</p></div>`);
 
-            // Certifications & Achievements
-            populateList('certifications-container', portfolioData.certifications, cert => `<li class="flex items-center text-slate-600 dark:text-slate-400"><i data-feather="award" class="w-4 h-4 mr-3 section-highlight"></i><a href="${cert.link}" target="_blank" class="hover:section-highlight">${cert.name}</a> - <span class="text-xs ml-1">${cert.issuer}</span></li>`);
-            populateList('achievements-container', portfolioData.achievements, ach => `<li class="flex items-start"><span class="section-highlight mr-3 mt-1">&#10148;</span><span class="text-slate-600 dark:text-slate-400">${ach}</span></li>`);
+            populateList('certifications-container', portfolioData.certifications, cert => `<li class="flex items-center text-[var(--text-muted-color)]"><i data-feather="award" class="w-4 h-4 mr-3 section-highlight"></i><a href="${cert.link}" target="_blank" class="hover:section-highlight">${cert.name}</a> - <span class="text-xs ml-1">${cert.issuer}</span></li>`);
+            populateList('achievements-container', portfolioData.achievements, ach => `<li class="flex items-start"><span class="section-highlight mr-3 mt-1">&#10148;</span><span class="text-[var(--text-muted-color)]">${ach}</span></li>`);
 
-            // Passion Projects
             populateList('passion-projects-container', portfolioData.passionProjects, (proj, index) => {
                 const videoHTML = proj.video ? `<div class="aspect-video w-full h-full"><iframe class="w-full h-full rounded-md" src="https://www.youtube.com/embed/${proj.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>` : `<img src="https://placehold.co/600x338/f8fafc/e2e8f0?text=Project+Visual" alt="${proj.title}" class="rounded-md w-full h-full object-cover">`;
-                return `<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"><div class="${index % 2 === 0 ? '' : 'md:order-last'}">${videoHTML}</div><div class="text-left md:text-right ${index % 2 === 0 ? 'md:text-left' : ''}"><p class="font-mono text-sm section-highlight">Personal Project</p><h3 class="text-2xl font-bold mb-4">${proj.title}</h3><div class="p-6 rounded-md glass-effect text-slate-600 dark:text-slate-400 text-sm mb-4"><p>${proj.description}</p></div><ul class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-600 dark:text-slate-400 font-mono ${index % 2 === 0 ? 'justify-start' : 'md:justify-end'} mb-4">${proj.tech.map(t => `<li>${t}</li>`).join('')}</ul>${proj.link !== '#' ? `<a href="${proj.link}" target="_blank" rel="noopener noreferrer" class="inline-block hover:section-highlight"><i data-feather="external-link"></i></a>` : ''}</div></div>`;
+                return `<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"><div class="${index % 2 === 0 ? '' : 'md:order-last'}">${videoHTML}</div><div class="text-left md:text-right ${index % 2 === 0 ? 'md:text-left' : ''}"><p class="font-mono text-sm section-highlight">Personal Project</p><h3 class="text-2xl font-bold mb-4">${proj.title}</h3><div class="p-6 rounded-md glass-effect text-[var(--text-muted-color)] text-sm mb-4"><p>${proj.description}</p></div><ul class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-[var(--text-muted-color)] font-mono ${index % 2 === 0 ? 'justify-start' : 'md:justify-end'} mb-4">${proj.tech.map(t => `<li>${t}</li>`).join('')}</ul>${proj.link !== '#' ? `<a href="${proj.link}" target="_blank" rel="noopener noreferrer" class="inline-block hover:section-highlight"><i data-feather="external-link"></i></a>` : ''}</div></div>`;
             });
 
-            // Skills
             populateList('skills-container', portfolioData.skills, skill => `<span class="bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300 text-sm font-medium px-4 py-2 rounded-full shadow-md">${skill}</span>`);
             
-            // Extra-Curricular
             document.getElementById('extra-curricular-title').textContent = portfolioData.extraCurricular.title;
             document.getElementById('extra-curricular-summary').textContent = portfolioData.extraCurricular.summary;
             populateList('extra-curricular-details', portfolioData.extraCurricular.details, detail => `<li class="flex items-start"><span class="section-highlight mr-3 mt-1">&#10148;</span><span>${detail}</span></li>`);
             populateList('extra-curricular-channels', portfolioData.extraCurricular.channels, channel => `<a href="${channel.link}" target="_blank" class="text-sm section-highlight hover:underline flex items-center"><i data-feather="youtube" class="w-4 h-4 mr-2"></i>${channel.name}</a>`);
 
-            // Hire Me Button
-            const hireMeContainer = document.getElementById('hire-me-button-container');
             const mailtoSubject = encodeURIComponent("Let's Connect - Opportunity");
             const mailtoBody = encodeURIComponent(`Hi ${portfolioData.name},\n\nI came across your portfolio and was very impressed. I'd like to discuss a potential opportunity.\n\nBest regards,`);
-            hireMeContainer.innerHTML = `<a href="mailto:${portfolioData.email}?subject=${mailtoSubject}&body=${mailtoBody}" class="block bg-teal-500 text-white dark:bg-green-400 dark:text-gray-900 font-bold py-3 px-6 rounded-full shadow-lg hover:bg-teal-600 dark:hover:bg-green-300 transition-all duration-300 transform hover:scale-110">Hire Me!</a>`;
+            
+            const contactLinksContainer = document.getElementById('contact-links');
+            contactLinksContainer.innerHTML = `
+                <a href="mailto:${portfolioData.email}?subject=${mailtoSubject}&body=${mailtoBody}" class="inline-flex items-center gap-2 px-6 py-3 font-semibold text-[var(--text-color)] border-2 border-[var(--highlight-color)] rounded-lg hover:bg-[var(--highlight-color)] hover:text-white dark:hover:text-[#0a192f] transition-colors">
+                    <i data-feather="mail" class="w-5 h-5"></i> Email Me
+                </a>
+                <a href="${portfolioData.linkedin}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 font-semibold text-[var(--text-color)] border-2 border-[var(--highlight-color)] rounded-lg hover:bg-[var(--highlight-color)] hover:text-white dark:hover:text-[#0a192f] transition-colors">
+                    <i data-feather="linkedin" class="w-5 h-5"></i> LinkedIn
+                </a>
+            `;
+
+            document.getElementById('hire-me-button-container').innerHTML = `<a href="mailto:${portfolioData.email}?subject=${mailtoSubject}&body=${mailtoBody}" class="block bg-teal-500 text-white dark:bg-green-400 dark:text-gray-900 font-bold py-3 px-6 rounded-full shadow-lg hover:bg-teal-600 dark:hover:bg-green-300 transition-all duration-300 transform hover:scale-110">Hire Me!</a>`;
             
             updateThemeIcon();
             if (typeof feather !== 'undefined') feather.replace();
@@ -355,10 +361,8 @@
             }
         }
 
-        // Helper for consistent section titles
         document.querySelectorAll('.section-title').forEach(el => el.classList.add('text-3xl', 'font-bold', 'mb-8', 'flex', 'items-center'));
     </script>
 </body>
 </html>
-
 
