@@ -11,7 +11,7 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;70t0;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
@@ -290,10 +290,13 @@
         // You don't need to edit anything below this line.
 
         document.addEventListener('DOMContentLoaded', () => {
-            populateContent();
-            setupEventListeners();
-            animateOnScroll();
-            feather.replace(); // Initialize Feather Icons
+            try {
+                populateContent();
+                setupEventListeners();
+                animateOnScroll();
+            } catch (error) {
+                console.error("An error occurred during page initialization:", error);
+            }
         });
         
         function populateContent() {
@@ -305,6 +308,7 @@
 
             // About
             const aboutDescContainer = document.getElementById('about-description');
+            aboutDescContainer.innerHTML = ''; // Clear existing content
             portfolioData.about.description.forEach(p => {
                 const para = document.createElement('p');
                 para.textContent = p;
@@ -314,6 +318,7 @@
 
             // Experience
             const expContainer = document.getElementById('experience-container');
+            expContainer.innerHTML = ''; // Clear existing content
             portfolioData.experience.forEach(job => {
                 const jobEl = document.createElement('div');
                 jobEl.className = 'flex flex-col md:flex-row gap-6 p-6 rounded-lg transition duration-300 hover:bg-slate-800/50 glass-effect';
@@ -339,19 +344,37 @@
 
             // Projects
             const projContainer = document.getElementById('projects-container');
+            projContainer.innerHTML = ''; // Clear existing content
             portfolioData.projects.forEach(proj => {
                 const projEl = document.createElement('div');
-                projEl.className = 'flex flex-col justify-between rounded-lg p-6 transition duration-300 hover:-translate-y-2 glass-effect';
+                projEl.className = 'flex flex-col justify-between rounded-lg p-6 transition duration-300 hover:-translate-y-2 glass-effect h-full';
                 
-                let projectContent = `
-                    <div>
-                        <div class="flex justify-between items-center mb-4">
-                            <i data-feather="folder" class="w-10 h-10 text-green-300"></i>
-                             ${proj.link !== '#' ? `<a href="${proj.link}" target="_blank" rel="noopener noreferrer"><i data-feather="external-link" class="w-6 h-6 hover:text-green-300"></i></a>` : ''}
+                let projectContent;
+
+                if (proj.video) {
+                    projectContent = `
+                        <div class="flex-grow">
+                            <div class="aspect-video mb-4 rounded-md overflow-hidden">
+                                <iframe class="w-full h-full" src="https://www.youtube.com/embed/${proj.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-200 mb-2">${proj.title}</h3>
+                            <p class="text-slate-400 text-sm mb-4">${proj.description}</p>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-200 mb-2">${proj.title}</h3>
-                        <p class="text-slate-400 text-sm mb-4">${proj.description}</p>
-                    </div>
+                    `;
+                } else {
+                    projectContent = `
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-center mb-4">
+                                <i data-feather="folder" class="w-10 h-10 text-green-300"></i>
+                                ${proj.link !== '#' ? `<a href="${proj.link}" target="_blank" rel="noopener noreferrer"><i data-feather="external-link" class="w-6 h-6 hover:text-green-300"></i></a>` : ''}
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-200 mb-2">${proj.title}</h3>
+                            <p class="text-slate-400 text-sm mb-4">${proj.description}</p>
+                        </div>
+                    `;
+                }
+
+                projectContent += `
                     <div>
                         <ul class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400 font-mono">
                            ${proj.tech.map(t => `<li>${t}</li>`).join('')}
@@ -359,25 +382,13 @@
                     </div>
                 `;
                 
-                if (proj.video) {
-                    projectContent = `
-                        <div class="aspect-w-16 aspect-h-9 mb-4 rounded-md overflow-hidden">
-                            <iframe src="https://www.youtube.com/embed/${proj.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-200 mb-2">${proj.title}</h3>
-                        <p class="text-slate-400 text-sm mb-4">${proj.description}</p>
-                        <ul class="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400 font-mono">
-                           ${proj.tech.map(t => `<li>${t}</li>`).join('')}
-                        </ul>
-                    `;
-                }
-
                 projEl.innerHTML = projectContent;
                 projContainer.appendChild(projEl);
             });
 
              // Skills
             const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = ''; // Clear existing content
             portfolioData.skills.forEach(skill => {
                 const skillEl = document.createElement('span');
                 skillEl.className = 'bg-slate-700 text-slate-300 text-sm font-medium px-4 py-2 rounded-full shadow-md';
@@ -387,6 +398,7 @@
 
             // Hire Me Button
             const hireMeContainer = document.getElementById('hire-me-button-container');
+            hireMeContainer.innerHTML = ''; // Clear existing content
             const mailtoSubject = encodeURIComponent("Let's Connect - Opportunity");
             const mailtoBody = encodeURIComponent(`Hi ${portfolioData.name},\n\nI came across your portfolio and was very impressed. I'd like to discuss a potential opportunity.\n\nBest regards,`);
             const mailtoLink = `mailto:${portfolioData.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
@@ -396,30 +408,40 @@
             hireMeButton.className = 'block bg-green-400 text-gray-900 font-bold py-3 px-6 rounded-full shadow-lg hover:bg-green-300 transition-all duration-300 transform hover:scale-110';
             hireMeButton.innerHTML = 'Hire Me!';
             hireMeContainer.appendChild(hireMeButton);
+
+            // IMPORTANT FIX: Initialize Feather Icons AFTER dynamically creating the elements that use them.
+            // We also check if the 'feather' object is available to prevent errors if the script fails to load.
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
         }
 
         function setupEventListeners() {
             // Header shadow on scroll
             window.addEventListener('scroll', () => {
                 const header = document.getElementById('header');
-                if (window.scrollY > 10) {
-                    header.classList.add('shadow-lg');
-                } else {
-                    header.classList.remove('shadow-lg');
+                if (header) {
+                    if (window.scrollY > 10) {
+                        header.classList.add('shadow-lg');
+                    } else {
+                        header.classList.remove('shadow-lg');
+                    }
                 }
             });
 
              // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
             
             // Close mobile menu on link click
             document.querySelectorAll('#mobile-menu a').forEach(link => {
                 link.addEventListener('click', () => {
-                     mobileMenu.classList.add('hidden');
+                     if (mobileMenu) mobileMenu.classList.add('hidden');
                 });
             });
         }
@@ -442,4 +464,5 @@
 
 </body>
 </html>
+
 
