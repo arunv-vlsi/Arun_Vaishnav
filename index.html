@@ -323,7 +323,7 @@
                 </div>`);
 
             populateList('certifications-container', portfolioData.certifications, cert => `<li class="flex items-center text-[var(--text-muted-color)]"><i data-feather="award" class="w-4 h-4 mr-3 section-highlight"></i><a href="${cert.link}" target="_blank" class="hover:section-highlight">${cert.name}</a> - <span class="text-xs ml-1">${cert.issuer}</span></li>`);
-            populateList('achievements-container', portfolioData.achievements, ach => `<li class="flex items-start"><span class="section-highlight mr-3 mt-1">&#10148;</span><span class="text-[var(--text-muted-color)]">${ach}</span></li>`);
+            populateList('achievements-container', portfolioData.achievements, ach => `<li class="flex items-start"><span class="section-highlight mr-3 mt-1">&#10148;</span><span class="text-[var(--text-muted-color)]">${highlightText(ach)}</span></li>`);
 
             populateList('passion-projects-container', portfolioData.passionProjects, (proj, index) => {
                 const videoHTML = proj.video ? `<div class="aspect-video w-full h-full"><iframe class="w-full h-full rounded-md" src="https://www.youtube.com/embed/${proj.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>` : `<img src="https://placehold.co/600x338/f8fafc/e2e8f0?text=Project+Visual" alt="${proj.title}" class="rounded-md w-full h-full object-cover">`;
